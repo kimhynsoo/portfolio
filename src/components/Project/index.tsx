@@ -1,34 +1,26 @@
+import { useState } from "react";
+
 import SectionTitle from "../SectionTitle";
 import ProjectItem from "./ProjectItem";
+import ProjectModal from "./ProjectModal";
 
-import { DataProps } from "@/types";
+import { DataProps, ProjectProps } from "@/types";
 
 const Project = ({ project }: Pick<DataProps, "project">) => {
+  const [selectedProject, setSelectedProject] = useState<ProjectProps | null>(null);
+
   return (
-    <>
-      <div>
-        <SectionTitle>Team Project</SectionTitle>
-        <div className="flex flex-col gap-24">
-          {[...project]
-            .reverse()
-            .filter((project) => project.isTeam)
-            .map((project) => (
-              <ProjectItem key={project.id} {...project} />
-            ))}
-        </div>
+    <div>
+      <SectionTitle>Projects</SectionTitle>
+      <div className="grid gap-6 lg:grid-cols-3">
+        {[...project].reverse().map((project) => (
+          <ProjectItem key={project.id} project={project} onSelect={setSelectedProject} />
+        ))}
       </div>
-      <div>
-        <SectionTitle>Personal Project</SectionTitle>
-        <div className="flex flex-col gap-24">
-          {[...project]
-            .reverse()
-            .filter((project) => !project.isTeam)
-            .map((project) => (
-              <ProjectItem key={project.id} {...project} />
-            ))}
-        </div>
-      </div>
-    </>
+      {selectedProject && (
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      )}
+    </div>
   );
 };
 

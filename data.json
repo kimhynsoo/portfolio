@@ -1,107 +1,204 @@
 {
   "resumeTitle": {
-    "title": "Hong Gil Dong"
+    "title": "KIM Hyeon-Su | Backend / AI Engineer"
   },
 
   "information": {
-    "name": "홍길동",
+    "name": "김현수",
     "contact": [
-      { "id": 0, "name": "Email", "href": "honggildong@gmail.com", "isEmail": true },
-      { "id": 1, "name": "Github", "href": "https://github.com/honggildong" },
-      { "id": 2, "name": "Blog", "href": "https://velog.io/@honggildong" }
+      { "id": 0, "name": "Email", "href": "wshyhs@gmail.com", "isEmail": true },
+      { "id": 1, "name": "Github", "href": "https://github.com/kimhynsoo" },
+      { "id": 2, "name": "Phone", "href": "tel:010-4100-6367" }
     ]
   },
 
-  "workExperience": [
-    {
-      "id": 0,
-      "name": "커피프린스 1호점",
-      "position": "Front-end Engineer",
-      "period": ["2019. 01", "2019. 09"]
-    },
-    {
-      "id": 1,
-      "name": "커피프린스 2호점",
-      "position": "바리스타",
-      "period": ["2022. 01", "now"]
-    }
-  ],
+  "workExperience": [],
 
   "project": [
     {
       "id": 0,
-      "name": "첫번째 팀 프로젝트",
-      "description": "프로젝트에 대한 간단한 설명을 적을 수 있습니다. 어떤 프로젝트인지 주제나 강조하고 싶은 부분을 적어보세요.",
-      "webUrl": "https://github.com/sjoleee/",
-      "repoUrl": "https://github.com/sjoleee/",
+      "name": "DocQ",
+      "description": "PDF 문서를 AI 퀴즈로 변환하고, 실시간 멀티플레이 보드게임 방식으로 학습하는 플랫폼",
+      "repoUrl": "https://github.com/kimhynsoo/DocQ",
       "isTeam": true,
-      "period": ["2022. 07", "2022. 09"],
-      "stack": ["사용한 기술을 적어주세요", "React.js", "JavaScript", "styled-components", "Recoil"]
+      "period": ["2026. 01", "2026. 02"],
+      "stack": ["Spring Boot", "WebSocket", "Redis Stream", "Consumer Group", "PostgreSQL"],
+      "images": [
+        "/images/project/DocQ.png",
+        "/images/project/DocQ2.png",
+        "/images/project/DocQ3.png"
+      ],
+      "architectureImages": ["/images/project/독큐 시스템 아키텍쳐.png"]
     },
     {
       "id": 1,
-      "name": "첫번째 개인 프로젝트",
-      "description": "프로젝트에 대한 간단한 설명을 적을 수 있습니다. 어떤 프로젝트인지 주제나 강조하고 싶은 부분을 적어보세요.",
-      "webUrl": "https://github.com/sjoleee/",
-      "repoUrl": "https://github.com/sjoleee/",
-      "isTeam": false,
-      "period": ["2022. 10", "2022. 11"],
-      "stack": ["JavaScript", "HTML/CSS"]
+      "name": "우주드로우",
+      "description": "사용자 그림을 AI로 분석하고 감정 기록을 별자리 형태로 시각화하는 미술치료 기반 기록 서비스",
+      "repoUrl": "https://github.com/kimhynsoo/WoojuDraw",
+      "isTeam": true,
+      "period": ["2026. 02", "2026. 03"],
+      "stack": ["FastAPI", "YOLO", "OpenCV", "Docker Compose", "Nginx", "Amazon S3"],
+      "images": [
+        "/images/project/우주드로우.png",
+        "/images/project/우주드로우2.png"
+      ],
+      "architectureImages": ["/images/project/우주드로우 시스템 아키텍쳐.png"]
+    },
+    {
+      "id": 2,
+      "name": "Y-ECOUNT",
+      "description": "ERP 메타데이터와 NLQ를 연결하되, LLM 생성 SQL을 안전하게 통제하는 AI ERP 서비스",
+      "repoUrl": "https://github.com/kimhynsoo/Y-ECOUNT",
+      "isTeam": true,
+      "period": ["2026. 04", "2026. 05"],
+      "stack": ["NestJS", "TypeScript", "PostgreSQL", "LLM", "AST Validation", "Workflow Engine"],
+      "images": [
+        "/images/project/y-ecount.png",
+        "/images/project/Y-ecount2.png"
+      ],
+      "architectureImages": ["/images/project/y-ecount시스템 아키텍쳐.png"]
     }
   ],
 
   "activity": [
     {
       "id": 0,
-      "name": "첫번째 활동",
-      "period": ["2022. 06", "2022. 08"],
-      "description": "첫번째 활동에 대한 간략한 설명"
+      "name": "Backend",
+      "period": ["Spring Boot", "NestJS"],
+      "description": "REST API와 WebSocket 기반 실시간 서비스 구현\n계층형 구조를 바탕으로 도메인 로직, 인증/인가 흐름 분리\nERP 도메인 서비스와 AI Assistant Orchestrator 구현",
+      "items": [
+        {
+          "title": "Java / Spring Boot",
+          "badge": "J",
+          "icon": "java",
+          "points": [
+            "REST API, WebSocket 기반 실시간 서비스와 게임 상태 관리 로직 구현",
+            "계층형 구조를 바탕으로 도메인 로직 분리 및 인증/인가 흐름 구성"
+          ]
+        },
+        {
+          "title": "TypeScript / NestJS",
+          "badge": "TS",
+          "icon": "typescript",
+          "points": [
+            "ERP 도메인 서비스와 AI Assistant Orchestrator 구현",
+            "Intent Router, NLQ 처리 흐름, 모듈 단위 서비스 구성"
+          ]
+        }
+      ]
     },
     {
       "id": 1,
-      "name": "두번째 활동",
-      "period": ["2022. 06", "2022. 08"],
-      "description": "두번째 활동에 대한 간략한 설명"
+      "name": "Real-time & Data",
+      "period": ["Redis Stream", "PostgreSQL"],
+      "description": "Consumer Group, ACK, Pending 구조를 활용한 메시지 처리 설계\n멀티플레이 상태 불일치 문제 해결 및 ACK Timeout 적용\nJOIN, GROUP BY, CTE 기반 분석 쿼리 작성",
+      "items": [
+        {
+          "title": "Redis / Redis Stream",
+          "badge": "R",
+          "icon": "redis",
+          "points": [
+            "Consumer Group, ACK, Pending 구조를 활용한 메시지 처리 설계",
+            "멀티플레이 상태 불일치 문제 해결 및 ACK Timeout 적용"
+          ]
+        },
+        {
+          "title": "PostgreSQL / SQL",
+          "badge": "DB",
+          "icon": "database",
+          "points": [
+            "ERP 도메인 테이블 설계 및 관계형 데이터 모델링",
+            "JOIN, GROUP BY, CTE 기반 분석 쿼리 작성"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Infra & AI",
+      "period": ["Docker", "FastAPI"],
+      "description": "Docker Compose 기반 실행 환경과 Nginx Reverse Proxy 구성\nYOLO, OpenCV, FastAPI 기반 이미지 분석 파이프라인 구현\nLLM 생성 결과를 서비스에서 안전하게 통제하는 검증 흐름 설계",
+      "items": [
+        {
+          "title": "Docker / Jenkins / Nginx",
+          "badge": "DO",
+          "icon": "docker",
+          "points": [
+            "Docker Compose 기반 실행 환경 구성",
+            "Jenkins CI/CD 파이프라인 구성",
+            "Nginx Reverse Proxy 설정"
+          ]
+        },
+        {
+          "title": "YOLO / OpenCV / FastAPI",
+          "badge": "AI",
+          "icon": "ai",
+          "points": [
+            "손그림 객체탐지 모델 학습 및 3개 모델 분리 추론 구조 설계",
+            "이미지 특징 추출 및 AI 분석 파이프라인 구현"
+          ]
+        }
+      ]
     }
   ],
 
   "education": [
     {
       "id": 0,
-      "name": "첫번째 교육",
-      "period": ["2013. 02", "2020. 02"],
-      "description": "첫번째 교육에 대한 간략한 설명"
+      "name": "삼성 청년 SW·AI 아카데미 (SSAFY)",
+      "period": ["2025. 07", "2026. 06"],
+      "description": "SSAFY 14기"
     },
     {
       "id": 1,
-      "name": "두번째 교육",
-      "period": ["2013. 02", "2020. 02"],
-      "description": "두번째 교육에 대한 간략한 설명"
+      "name": "경북대학교 컴퓨터학부",
+      "period": ["2019. 03", "2025. 08"],
+      "description": "컴퓨터학부 졸업"
     }
   ],
 
   "certificate": [
     {
+      "id": 2,
+      "name": "자동차 운전면허 1종 대형",
+      "date": "2022. 12",
+      "organizer": "대구광역시경찰청"
+    },
+    {
       "id": 0,
-      "name": "TOEIC 1000점",
-      "date": "2019. 07. 28",
-      "organizer": "ETS"
+      "name": "SQLD",
+      "date": "2025. 07",
+      "organizer": "한국데이터산업진흥원"
     },
     {
       "id": 1,
-      "name": "OPIC IH",
-      "date": "2019. 07. 28",
-      "organizer": "ETS"
+      "name": "정보처리기사",
+      "date": "2025. 12",
+      "organizer": "한국산업인력공단"
     }
   ],
 
   "award": [
     {
       "id": 0,
-      "name": "첫번째 수상",
-      "date": "2019. 07. 28",
-      "organizer": "수여기관",
-      "description": "첫번째 수상에 대한 간략한 설명"
+      "name": "SSAFY 관통프로젝트 최우수상",
+      "date": "2025. 12",
+      "organizer": "삼성전자 주식회사",
+      "description": "프로젝트명 : TourZone(터전)\n삼성청년 SW·AI 아카데미 프로젝트 경진대회에서 생성형 AI와 공공데이터를 활용한 주거 추천 서비스를 개발해 최우수팀으로 선정되었습니다.\n프로젝트에서 팀장을 맡아 Spring Boot 기반 RESTful API 설계와 Vue.js를 활용한 공공데이터 지도 시각화를 담당했습니다. 또한 FastAPI 기반 AI 서버에서 추천 파이프라인을 설계해, 사용자의 조건에 맞는 주거 매물을 추천하는 기능을 구현하며 서비스의 핵심 로직을 완성했습니다."
+    },
+    {
+      "id": 1,
+      "name": "SSAFY 공통프로젝트 우수상",
+      "date": "2026. 02",
+      "organizer": "삼성전자 주식회사",
+      "description": "프로젝트명 : DocQ(독큐)\n- 삼성청년 SW·AI 아카데미 2학기 공통프로젝트에서 실시간 멀티플레이 학습 보조 게임을 개발해 우수팀으로 선정되었으며, 구미 2반 1위를 달성했습니다.\n프로젝트에서 팀장을 맡아 Spring Boot 기반으로 서비스 전반의 백엔드 로직을 구현했으며, WebSocket과 Redis를 활용해 실시간 게임 상태를 관리했습니다. 특히 다수 사용자가 동시에 접속하는 환경에서 발생할 수 있는 상태 불일치 문제를 해결하기 위해 Redis Stream의 ACK/Pending 구조를 도입하여 메시지 유실을 방지하고, 참여자 간 진행 상태와 점수 정합성을 안정적으로 유지할 수 있도록 설계했습니다."
+    },
+    {
+      "id": 2,
+      "name": "SSAFY 특화프로젝트 우수상",
+      "date": "2026. 04",
+      "organizer": "삼성전자 주식회사",
+      "description": "프로젝트명 : 우주드로우\n- 삼성청년 SW·AI 아카데미 2학기 특화프로젝트에서 미술치료 기반 심리 분석 및 기록 서비스를 개발해 우수팀으로 선정되었으며, 구미 2반 2위를 달성했습니다.프로젝트에서 AI·인프라를 담당하며 FastAPI 기반 AI 서버 파이프라인을 구축했고, YOLO 기반 객체 탐지와 OpenCV 기반 특징 추출 로직을 구현했습니다. 특히 클래스 불균형 문제를 해결하기 위해 YOLO 모델을 집·나무·사람 3개의 독립 모델로 분리하고, AI Hub 손그림 데이터 5만 장에 리사이즈·블러·색상 반전 등 데이터 증강을 적용해 학습했습니다. RabbitMQ 비동기 큐로 AI 처리 요청을 안정적으로 관리했으며, LLM 프롬프팅 시 이미지를 480px로 리사이즈·JPEG 압축해 비용과 페이로드를 최적화했습니다. 또한 Nginx를 활용해 EC2 서버 환경을 구성하고, Prometheus·Loki·Grafana·Slack 웹훅을 연동해 서버 지표와 오류 로그를 실시간으로 모니터링할 수 있는 운영 환경을 구축했습니다."
     }
   ]
 }

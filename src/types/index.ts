@@ -26,6 +26,8 @@ export interface ProjectProps {
   stack: string[];
   markdown?: string;
   imgSrc?: string;
+  images?: string[];
+  architectureImages?: string[];
 }
 
 export interface AwardProps {
@@ -36,6 +38,19 @@ export interface AwardProps {
   description: string;
 }
 
+export interface ActivityProps {
+  id: number;
+  name: string;
+  description: string;
+  period: string[];
+  items?: {
+    title: string;
+    badge: string;
+    icon?: "java" | "typescript" | "redis" | "database" | "docker" | "ai";
+    points: string[];
+  }[];
+}
+
 export interface DataProps {
   resumeTitle: {
     title: string;
@@ -43,12 +58,7 @@ export interface DataProps {
   information: InformationProps;
   workExperience: WorkExperienceProps[];
   project: ProjectProps[];
-  activity: {
-    id: number;
-    name: string;
-    description: string;
-    period: string[];
-  }[];
+  activity: ActivityProps[];
   education: {
     id: number;
     name: string;

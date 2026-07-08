@@ -4,6 +4,8 @@ import WorkExperienceItem from "./WorkExperienceItem";
 import { DataProps } from "@/types";
 
 const WorkExperience = ({ workExperience }: Pick<DataProps, "workExperience">) => {
+  if (!workExperience.length) return null;
+
   return (
     <div>
       <SectionTitle>Work Experience</SectionTitle>
