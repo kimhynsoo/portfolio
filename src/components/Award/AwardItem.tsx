@@ -29,13 +29,13 @@ const AwardItem = ({ name, date, organizer, description }: AwardProps) => {
             </div>
           )}
         </div>
-        <div className="flex flex-col gap-3 text-base leading-relaxed text-GRAY_EXTRAHEAVY dark:text-GRAY_LIGHT">
+        <ul className="flex list-disc flex-col gap-2 pl-5 text-base leading-relaxed text-GRAY_EXTRAHEAVY dark:text-GRAY_LIGHT">
           {details.map((detail) => (
-            <p key={detail} className="whitespace-pre-wrap">
+            <li key={detail} className="pl-1">
               {detail.replace(/^-\s*/, "")}
-            </p>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </article>
   );

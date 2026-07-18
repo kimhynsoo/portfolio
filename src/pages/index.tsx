@@ -5,6 +5,7 @@ import { NextPage } from "next";
 
 import Activity from "@/components/Activity";
 import Certificate from "@/components/Certificate";
+import Comments from "@/components/Comments";
 import Education from "@/components/Education";
 import Footer from "@/components/Footer";
 import Information from "@/components/Information";
@@ -32,12 +33,13 @@ const Home: NextPage<DataProps> = ({
       <ResumeTitle resumeTitle={resumeTitle} />
       <Layout>
         <Information information={information} />
-        <WorkExperience workExperience={workExperience} />
         <Project project={project} />
+        {award.length > 0 && <Award award={award} />}
+        <WorkExperience workExperience={workExperience} />
         <Activity activity={activity} />
         {education.length > 0 && <Education education={education} />}
         {certificate.length > 0 && <Certificate certificate={certificate} />}
-        {award.length > 0 && <Award award={award} />}
+        <Comments />
       </Layout>
       <Footer contact={information.contact} name={information.name} />
     </>
@@ -104,7 +106,8 @@ const getImgSrc = async ({
   section: string;
   item: InformationProps | ProjectProps | WorkExperienceProps;
 }) => {
-  const imgSrc = `/images/${section}/${"id" in item ? item.id : "profile"}.png`;
+  const filename = "id" in item ? `${item.id}.png` : "포폴 사진 정면.png";
+  const imgSrc = `/images/${section}/${filename}`;
   const filePath = path.join(process.cwd(), "public", imgSrc);
   try {
     await fs.stat(filePath);

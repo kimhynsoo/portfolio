@@ -10,6 +10,7 @@ type Detail = {
   role: string;
   features: string[];
   problem: string;
+  selectedApproach: string;
   decision: string;
   solution: {
     title: string;
@@ -33,14 +34,16 @@ const detailsByProjectId: Record<number, Detail> = {
     ],
     problem:
       "1차 MVP 배포 후 사용자마다 게임 진행 화면이 다르게 보였습니다. 실시간 전달은 되고 있었지만, 사용자 응답 처리 완료 여부와 라운드 전환 기준은 보장되지 않았습니다.",
+    selectedApproach:
+      "실시간 화면 전달은 WebSocket이 담당하고, 사용자 응답 이벤트의 처리 보장과 라운드 전환 기준은 Redis Stream이 담당하도록 구조를 분리했습니다.",
     decision:
-      "WebSocket은 빠르지만 메시지 처리 여부를 보장하지 못한다고 판단했고, 실시간 연결과 상태 일관성의 책임을 분리했습니다.",
+      "WebSocket은 빠르지만 메시지 처리 여부를 보장하지 못한다고 판단했고, Redis Stream은 Consumer Group, ACK, Pending Entries List를 기본 제공해 메시지 처리 보장과 미처리 이벤트 재확인을 별도 큐 시스템 없이 비교적 적은 구현 비용으로 설계할 수 있었습니다.",
     solution: [
       {
         title: "Redis Stream + ACK",
         action: "Consumer Group과 ACK로 사용자 응답 이벤트의 처리 완료 여부를 추적했습니다.",
         reason:
-          "WebSocket은 빠른 전달에는 적합하지만 서버가 메시지를 실제로 처리했는지까지 보장하지 못하기 때문입니다.",
+          "Redis Stream이 ACK와 Pending Entries List를 제공해 서버가 메시지를 실제로 처리했는지 추적하고, 미처리 이벤트를 다시 확인할 수 있었기 때문입니다.",
       },
       {
         title: "Pending 재처리 + ACK Timeout",
@@ -75,6 +78,8 @@ const detailsByProjectId: Record<number, Detail> = {
     ],
     problem:
       "집, 나무, 사람 그림은 시각적 특징과 해석 기준이 달라 단일 모델로 처리하면 탐지 편차가 커질 수 있었습니다. AI 결과가 사용자 리포트로 이어지는 서비스였기 때문에 추론 흐름의 안정성이 중요했습니다.",
+    selectedApproach:
+      "집, 나무, 사람을 하나의 모델로 한 번에 탐지하지 않고 객체별 YOLO 모델 3개로 분리한 뒤, OpenCV 특징 추출과 RAG 기반 분석을 이어 붙였습니다.",
     decision:
       "AI 결과가 사용자에게 직접 전달되는 서비스라면 모델 정확도만큼 입력 도메인 분리와 결과 신뢰성이 중요하다고 판단했습니다.",
     solution: [
@@ -114,9 +119,12 @@ const detailsByProjectId: Record<number, Detail> = {
       "AI Assistant Orchestrator",
       "Workflow Engine",
       "NLQ SQL 검증 및 실행 제한",
+      "Docker Compose 기반 Jenkins CI/CD 파이프라인",
     ],
     problem:
       "LLM이 생성한 SQL을 그대로 실행하면 다른 회사 데이터 조회, 허용되지 않은 테이블 접근, 삭제·수정 쿼리 실행 위험이 생길 수 있었습니다. ERP에서는 편의성만큼 데이터 안전성이 중요했습니다.",
+    selectedApproach:
+      "자연어 요청을 intent 단위로 먼저 분류하고, LLM이 생성한 SQL은 whitelist와 AST 검증을 통과한 SELECT 쿼리만 실행하도록 제한했습니다.",
     decision:
       "ERP 환경에서는 자연어 질의의 편의성보다 회사 데이터 분리와 쿼리 안전성이 우선이라고 판단했습니다.",
     solution: [
@@ -144,11 +152,18 @@ const detailsByProjectId: Record<number, Detail> = {
         reason:
           "각 단계의 실패 원인을 추적하고 검증 실패 시 실행 전에 안전하게 중단하기 위해서입니다.",
       },
+      {
+        title: "Docker Compose 기반 Jenkins CI/CD",
+        action:
+          "백엔드와 프론트엔드 실행 환경을 Docker Compose로 구성하고, Jenkins 파이프라인에서 테스트 단계를 병렬로 처리했습니다.",
+        reason:
+          "서비스 실행 환경을 일관되게 유지하면서 백엔드/프론트엔드 테스트를 동시에 수행해 CI 대기 시간을 줄이기 위해서입니다.",
+      },
     ],
     impact: [
       { label: "SQL 실행", value: "SELECT 제한" },
       { label: "보안 기준", value: "서버 주입" },
-      { label: "AI 결과", value: "검증 후 실행" },
+      { label: "CI 구조", value: "병렬 테스트" },
     ],
     retrospective:
       "AI 기능은 구현 자체보다 결과를 어디까지 믿고 어떻게 검증할지의 기준이 더 중요했습니다. AI가 만든 결과를 서비스가 통제하는 구조를 설계하는 경험이었습니다.",
@@ -193,7 +208,18 @@ const ProjectModal = ({
     };
   }, [onClose]);
 
-  if (!detail) return null;
+  const fallbackDetail: Detail = {
+    headline: project.description,
+    role: project.isTeam ? "Team Project" : "Personal Project",
+    features: project.stack,
+    problem: project.description,
+    selectedApproach: "프로젝트의 핵심 기술 스택과 구현 흐름을 기준으로 상세 내용을 구성했습니다.",
+    decision: "프로젝트 상세 내용은 준비 중입니다.",
+    solution: [],
+    impact: [],
+    retrospective: "프로젝트 경험과 구현 내용을 계속 보완하고 있습니다.",
+  };
+  const projectDetail = detail ?? fallbackDetail;
 
   return (
     <div
@@ -215,7 +241,7 @@ const ProjectModal = ({
               </span>
               <h3 className="text-4xl text-GRAY_EXTRAHEAVY dark:text-white">{project.name}</h3>
               <p className="max-w-3xl text-2xl font-bold leading-snug text-GRAY_EXTRAHEAVY dark:text-white md:text-3xl">
-                {detail.headline}
+                {projectDetail.headline}
               </p>
               <p className="max-w-3xl text-base leading-relaxed text-GRAY_HEAVY dark:text-GRAY_LIGHT">
                 {project.description}
@@ -249,7 +275,7 @@ const ProjectModal = ({
           )}
 
           <div className="grid gap-4 md:grid-cols-3">
-            {detail.impact.map((item) => (
+            {projectDetail.impact.map((item) => (
               <div
                 key={item.label}
                 className="rounded-lg border border-GRAY_LIGHT bg-GRAY_LIGHT p-4 dark:border-GRAY_EXTRAHEAVY dark:bg-GRAY_EXTRAHEAVY"
@@ -268,12 +294,12 @@ const ProjectModal = ({
             <div className="flex flex-col gap-6">
               <Section title="담당 역할">
                 <p className="rounded-lg border border-GRAY_LIGHT bg-GRAY_LIGHT p-4 text-base font-semibold leading-relaxed text-GRAY_EXTRAHEAVY dark:border-GRAY_EXTRAHEAVY dark:bg-GRAY_EXTRAHEAVY dark:text-GRAY_LIGHT">
-                  {detail.role}
+                  {projectDetail.role}
                 </p>
               </Section>
               <Section title="핵심 기능">
                 <ul className="m-0 flex list-disc flex-col gap-2 py-0 pl-5 text-base leading-relaxed text-GRAY_EXTRAHEAVY dark:text-GRAY_LIGHT">
-                  {detail.features.map((feature) => (
+                  {projectDetail.features.map((feature) => (
                     <li key={feature}>{feature}</li>
                   ))}
                 </ul>
@@ -286,17 +312,22 @@ const ProjectModal = ({
             <div className="flex flex-col gap-7">
               <Section title="문제 정의">
                 <p className="rounded-lg border-l-4 border-PRIMARY bg-GRAY_LIGHT p-4 text-base leading-relaxed text-GRAY_EXTRAHEAVY dark:bg-GRAY_EXTRAHEAVY dark:text-GRAY_LIGHT">
-                  {detail.problem}
+                  {projectDetail.problem}
+                </p>
+              </Section>
+              <Section title="선택한 방식">
+                <p className="rounded-lg border border-GRAY_LIGHT bg-white p-4 text-base font-semibold leading-relaxed text-GRAY_EXTRAHEAVY dark:border-GRAY_EXTRAHEAVY dark:bg-BLACK dark:text-GRAY_LIGHT">
+                  {projectDetail.selectedApproach}
                 </p>
               </Section>
               <Section title="왜 이 방식을 선택했는가">
                 <p className="rounded-lg border border-PRIMARY/40 bg-PRIMARY/10 p-4 text-lg font-bold leading-relaxed text-PRIMARY_HEAVY dark:text-PRIMARY">
-                  {detail.decision}
+                  {projectDetail.decision}
                 </p>
               </Section>
               <Section title="해결 과정">
                 <div className="grid gap-3">
-                  {detail.solution.map((solution) => (
+                  {projectDetail.solution.map((solution) => (
                     <article
                       key={solution.title}
                       className="rounded-lg border border-GRAY_LIGHT p-4 dark:border-GRAY_EXTRAHEAVY"
@@ -321,7 +352,7 @@ const ProjectModal = ({
               </Section>
               <Section title="회고">
                 <p className="text-base leading-relaxed text-GRAY_EXTRAHEAVY dark:text-GRAY_LIGHT">
-                  {detail.retrospective}
+                  {projectDetail.retrospective}
                 </p>
               </Section>
             </div>

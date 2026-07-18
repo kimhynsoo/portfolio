@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import { Analytics } from "@vercel/analytics/react";
 import { DefaultSeo } from "next-seo";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
@@ -6,19 +7,21 @@ import type { AppProps } from "next/app";
 /**
  * @description SEO를 위해 본인의 정보로 수정해주세요.
  */
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL;
+
 const DEFAULT_SEO = {
   title: "김현수 | Developer",
   description: "AI 기능을 안정적으로 서비스화하는 백엔드 개발자 김현수입니다.",
-  canonical: "https://www.naver.com/",
+  ...(SITE_URL ? { canonical: SITE_URL } : {}),
   openGraph: {
     type: "website",
     locale: "ko_KR",
-    url: "https://www.naver.com/",
+    ...(SITE_URL ? { url: SITE_URL } : {}),
     title: "김현수 | Developer",
     site_name: "김현수 | Developer",
     images: [
       {
-        url: "/share.png",
+        url: SITE_URL ? `${SITE_URL}/share.png` : "/share.png",
         width: 285,
         height: 167,
         alt: "김현수 | Developer",
@@ -28,12 +31,18 @@ const DEFAULT_SEO = {
   additionalLinkTags: [
     {
       rel: "icon",
+      href: "/favicon.ico",
+    },
+    {
+      rel: "icon",
       type: "image/png",
-      href: "/images/information/profile.png",
+      sizes: "32x32",
+      href: "/favicon-32x32.png",
     },
     {
       rel: "apple-touch-icon",
-      href: "/images/information/profile.png",
+      sizes: "180x180",
+      href: "/apple-touch-icon.png",
     },
   ],
   additionalMetaTags: [
@@ -59,6 +68,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <ThemeProvider attribute="class">
         <Component {...pageProps} />
       </ThemeProvider>
+      <Analytics />
     </>
   );
 };

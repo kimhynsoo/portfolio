@@ -58,9 +58,14 @@ const ProjectItem = ({
         </div>
       </button>
       <div className="flex items-center justify-between border-t border-GRAY_LIGHT px-5 py-4 dark:border-GRAY_EXTRAHEAVY">
-        <span className="text-sm font-semibold text-PRIMARY_HEAVY dark:text-PRIMARY">
+        <button
+          type="button"
+          onClick={() => onSelect(project)}
+          className="text-sm font-semibold text-PRIMARY_HEAVY transition hover:text-PRIMARY dark:text-PRIMARY"
+          aria-label={`${name} 상세 보기`}
+        >
           자세히 보기
-        </span>
+        </button>
         <Links repoUrl={repoUrl} webUrl={webUrl} />
       </div>
     </article>
